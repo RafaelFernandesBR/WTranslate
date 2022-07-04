@@ -44,7 +44,7 @@ namespace WTranslate
 
             TextBox Campo = ferramentas.CampoTx("Digite o texto para tradusir");
 
-            string[] idiomasDsp = { "pt", "en", "es" };
+            string[] idiomasDsp = { "auto", "pt", "en", "es", "ar", "az", "zh", "cs", "da", "nl", "eo", "fi", "fr", "de", "el", "he", "hi", "hu", "id", "ga", "it", "ja", "ko", "fa", "pl", "ru", "sk", "es", "tr", "uk", "vi" };
             ListBox opcoes = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de origem");
             ListBox opcoesDest = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de destino");
             CheckBox AutoClip = ferramentas.CreateCheckBox("Iniciar tradução automática", "&Selecione para Iniciar tradução automática");
