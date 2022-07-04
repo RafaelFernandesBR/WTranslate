@@ -39,14 +39,16 @@ namespace WTranslate
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Text = "WTranslate";
+            this.KeyPreview = true;
             this.ferramentas = new Ferramentas();
 
-            TextBox Campo = ferramentas.CampoTx();
+            TextBox Campo = ferramentas.CampoTx("Digite o texto para tradusir");
 
             string[] idiomasDsp = { "pt", "en", "es" };
             ListBox opcoes = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de origem");
             ListBox opcoesDest = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de destino");
-            CheckBox AutoClip = ferramentas.CreateCheckBox("Iniciar tradução automática");
+            CheckBox AutoClip = ferramentas.CreateCheckBox("Iniciar tradução automática", "&Selecione para Iniciar tradução automática");
+            //atalho de teclado no CheckBox 
 
             this.Controls.Add(opcoes);
             this.Controls.Add(opcoesDest);
@@ -91,6 +93,8 @@ namespace WTranslate
                 //parar monitoração do clipboard
                 ClipboardMonitor.Stop();
             }
+            //se for pressionado o atalho
+
         }
 
         private async void Campo_KeyDownAsync(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -111,11 +115,18 @@ namespace WTranslate
 
                 string translate = await Translate(texto, idiomaOrigem, idiomaDestino);
 
-                NVAccess.NVDA.Speak(translate.Replace(@"\r", ""));
+                if (translate != null)
+                {
+                    NVAccess.NVDA.Speak(translate.Replace(@"\r", ""));
+                }
+                else
+                {
+                    NVAccess.NVDA.Speak("Erro, verifique sua conexão");
+                }
             }
         }
 
-        private async Task<string> Translate(string texto, string idiomaOrigem, string idiomaDestino)
+        private async Task<string?> Translate(string texto, string idiomaOrigem, string idiomaDestino)
         {
             //tradusir em segundo plano
             return await Task.Run(() =>
@@ -124,7 +135,14 @@ namespace WTranslate
     //fazer a tradução
     var tradusido = google.TranslateTextAsync(texto, idiomaOrigem, idiomaDestino);
 
-    return tradusido;
+    if (tradusido != null)
+    {
+        return tradusido;
+    }
+    else
+    {
+        return null;
+    }
 });
         }
 
@@ -138,7 +156,15 @@ namespace WTranslate
                 //traduzir o texto novo
                 string translate = await Translate(texto_novo, idiomaOrigem, idiomaDestino);
 
-                NVAccess.NVDA.Speak(translate.Replace(@"\r", ""));
+                if (translate != null)
+                {
+                    NVAccess.NVDA.Speak(translate.Replace(@"\r", ""));
+                }
+                else
+                {
+                    NVAccess.NVDA.Speak("Erro, verifique sua conexão");
+                }
+
             }
         }
 

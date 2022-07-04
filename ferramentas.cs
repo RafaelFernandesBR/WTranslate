@@ -3,7 +3,7 @@ namespace WTranslate.ferramentas;
 public class Ferramentas
 {
 
-    public TextBox CampoTx(string? Texto = null)
+    public TextBox CampoTx(string textBox_AccessibleName, string? Texto = null)
     {
         //adicionar um campo de edição
         var textBox = new System.Windows.Forms.TextBox();
@@ -12,19 +12,20 @@ public class Ferramentas
         textBox.Text = Texto;
         textBox.Name = "textBox1";
         textBox.Size = new System.Drawing.Size(100, 20);
-        textBox.AccessibleName = "Digite o texto para tradusir";
+        textBox.AccessibleName = textBox_AccessibleName;
         textBox.TabIndex = 0;
 
         return textBox;
     }
 
-    public CheckBox CreateCheckBox(string Texto)
+    public CheckBox CreateCheckBox(string Texto, string checkBoxText)
     {
         //criar um checkbox
         var checkBox = new System.Windows.Forms.CheckBox();
         checkBox.Text = Texto;
         checkBox.Location = new System.Drawing.Point(100, 100);
         checkBox.Size = new System.Drawing.Size(100, 100);
+        checkBox.Text = checkBoxText;
 
         return checkBox;
     }
