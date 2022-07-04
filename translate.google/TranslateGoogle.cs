@@ -8,8 +8,16 @@ namespace Translate.Google
             var tradusir = await GetTranslateAsync(texto, IdiomaOrigem, IdiomaDestino);
             if (tradusir != null)
             {
-                //remover os primeiros 4 e os últimos 7 caractéres
-                string textFin = tradusir.Substring(2, tradusir.Length - 4);
+
+                string textFin = null;
+                if (IdiomaOrigem != "auto")
+                {
+                    textFin = tradusir.Substring(2, tradusir.Length - 4);
+                }
+                else
+                {
+                    textFin = tradusir.Substring(3, tradusir.Length - 11);
+                }
                 //remover os \\n do texto e adicionar nova linha no lugar
                 textFin = textFin.Replace("\\n", "\n");
 
