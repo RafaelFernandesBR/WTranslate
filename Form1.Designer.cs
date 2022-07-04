@@ -48,7 +48,6 @@ namespace WTranslate
             ListBox opcoes = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de origem");
             ListBox opcoesDest = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de destino");
             CheckBox AutoClip = ferramentas.CreateCheckBox("Iniciar tradução automática", "&Selecione para Iniciar tradução automática");
-            //atalho de teclado no CheckBox 
 
             this.Controls.Add(opcoes);
             this.Controls.Add(opcoesDest);
