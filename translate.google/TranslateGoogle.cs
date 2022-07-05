@@ -8,8 +8,8 @@ namespace Translate.Google
             var tradusir = await GetTranslateAsync(texto, IdiomaOrigem, IdiomaDestino);
             if (tradusir != null)
             {
-
                 string textFin = null;
+
                 if (IdiomaOrigem != "auto")
                 {
                     textFin = tradusir.Substring(2, tradusir.Length - 4);
