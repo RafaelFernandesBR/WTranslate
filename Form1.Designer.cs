@@ -46,7 +46,7 @@ namespace WTranslate
 
             string[] idiomasDsp = { "auto", "pt", "en", "es", "ar", "az", "zh", "cs", "da", "nl", "eo", "fi", "fr", "de", "el", "he", "hi", "hu", "id", "ga", "it", "ja", "ko", "fa", "pl", "ru", "sk", "es", "tr", "uk", "vi" };
             ListBox opcoes = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de origem");
-            ListBox opcoesDest = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de destino");
+            ListBox opcoesDest = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de destino", true);
             CheckBox AutoClip = ferramentas.CreateCheckBox("Iniciar tradução automática", "&Selecione para Iniciar tradução automática");
 
             this.Controls.Add(opcoes);
@@ -92,8 +92,6 @@ namespace WTranslate
                 //parar monitoração do clipboard
                 ClipboardMonitor.Stop();
             }
-            //se for pressionado o atalho
-
         }
 
         private async void Campo_KeyDownAsync(object sender, System.Windows.Forms.KeyEventArgs e)
