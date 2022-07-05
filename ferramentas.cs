@@ -30,7 +30,7 @@ public class Ferramentas
         return checkBox;
     }
 
-    public ListBox LtExcolha(string[] opcoes, string AccessibleName)
+    public ListBox LtExcolha(string[] opcoes, string AccessibleName, bool RemoveItemDoArray = false)
     {
         //adicionar uma lista de opções
         var listBox = new System.Windows.Forms.ListBox();
@@ -39,6 +39,13 @@ public class Ferramentas
         listBox.Name = "listBox1";
         listBox.Size = new System.Drawing.Size(120, 95);
         listBox.TabIndex = 1;
+
+        //se RemoveItemDoArray  for true, remover o peimeiro item
+        if (RemoveItemDoArray)
+        {
+            opcoes = opcoes.Skip(1).ToArray();
+        }
+
         listBox.Items.AddRange(opcoes);
         listBox.AccessibleName = AccessibleName;
         //gerar um número aleatório de até o tamanho do array
