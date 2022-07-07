@@ -12,6 +12,7 @@ namespace WTranslate
         private System.ComponentModel.IContainer components = null;
         private string texto_atual;
         private Ferramentas ferramentas;
+        private CheckBox CopyOrNot;
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -48,11 +49,14 @@ namespace WTranslate
             ListBox opcoes = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de origem");
             ListBox opcoesDest = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de destino", true);
             CheckBox AutoClip = ferramentas.CreateCheckBox("Iniciar tradução automática", "&Selecione para Iniciar tradução automática");
+            this.CopyOrNot = ferramentas.CreateCheckBox("Copiar traduções", "&Copiar traduções");
 
             this.Controls.Add(opcoes);
             this.Controls.Add(opcoesDest);
             this.Controls.Add(Campo);
             this.Controls.Add(AutoClip);
+            this.Controls.Add(CopyOrNot);
+
             //fazer a tradução quando for pressionado o atalho f1
             Campo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Campo_KeyDownAsync);
             //iniciar monitoração do clipboard quando marcado
@@ -115,6 +119,14 @@ namespace WTranslate
                 if (translate != null)
                 {
                     NVAccess.NVDA.Speak(translate.Replace(@"\r", ""));
+
+                    //se opção de copiar tiver marcada, copiar traduções
+                    if (CopyOrNot.Checked)
+                    {
+                        //copiar para a área de transferencia
+                        Clipboard.SetText(translate.Replace(@"\r", ""));
+                    }
+
                 }
                 else
                 {
@@ -156,6 +168,18 @@ namespace WTranslate
                 if (translate != null)
                 {
                     NVAccess.NVDA.Speak(translate.Replace(@"\r", ""));
+
+                    //se opção de copiar tiver marcada, copiar traduções
+                    if (CopyOrNot.Checked)
+                    {
+                        ClipboardMonitor.Stop();
+
+                        //copiar para a área de transferencia
+                        Clipboard.SetText(translate.Replace(@"\r", ""));
+
+                        ClipboardMonitor.Start();
+                    }
+
                 }
                 else
                 {
