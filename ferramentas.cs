@@ -11,7 +11,7 @@ public class Ferramentas
         textBox.Location = new System.Drawing.Point(12, 12);
         textBox.Text = Texto;
         textBox.Name = "textBox1";
-        textBox.Size = new System.Drawing.Size(100, 20);
+        textBox.Size = new System.Drawing.Size(500, 100);
         textBox.AccessibleName = textBox_AccessibleName;
         textBox.TabIndex = 0;
 
