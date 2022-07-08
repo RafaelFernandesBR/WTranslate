@@ -12,6 +12,7 @@ namespace WTranslate
         private System.ComponentModel.IContainer components = null;
         private string texto_atual;
         private Ferramentas ferramentas;
+        private CheckBox AutoClip;
         private CheckBox CopyOrNot;
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace WTranslate
             string[] idiomasDsp = { "auto", "pt", "en", "es", "ar", "az", "zh", "cs", "da", "nl", "eo", "fi", "fr", "de", "el", "he", "hi", "hu", "id", "ga", "it", "ja", "ko", "fa", "pl", "ru", "sk", "es", "tr", "uk", "vi" };
             ListBox opcoes = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de origem");
             ListBox opcoesDest = ferramentas.LtExcolha(idiomasDsp, "Selecione idioma de destino", true);
-            CheckBox AutoClip = ferramentas.CreateCheckBox("Iniciar tradução automática", "&Selecione para Iniciar tradução automática");
+            this.AutoClip = ferramentas.CreateCheckBox("Iniciar tradução automática", "&Selecione para Iniciar tradução automática");
             this.CopyOrNot = ferramentas.CreateCheckBox("Copiar traduções", "&Copiar traduções");
 
             this.Controls.Add(opcoes);
@@ -100,7 +101,8 @@ namespace WTranslate
 
         private async void Campo_KeyDownAsync(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F1)
+            if (e.KeyCode == Keys.F1 &&
+            AutoClip.Checked == false)
             {
                 //reculperar o texto digitado
                 TextBox Campo = sender as TextBox;
