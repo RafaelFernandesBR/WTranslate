@@ -35,13 +35,25 @@ namespace WTranslate
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private async void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Text = "WTranslate";
             this.KeyPreview = true;
+
+            string versaoAtual = "1.3";
+            var verifica = new VerificaNovaversao();
+            var versao = await verifica.Verifica();
+            if (versao != null)
+            {
+                if (versao != versaoAtual)
+                {
+                    NVAccess.NVDA.Speak("Nova versão disponível: " + versao + "Para baixar a nova versão, visite a URL: " + verifica.urlDl, true);
+                }
+            }
+
             this.ferramentas = new Ferramentas();
 
             TextBox Campo = ferramentas.CampoTx("Digite o texto para tradusir");
