@@ -142,7 +142,7 @@ namespace WTranslate
             //tradusir em segundo plano
             return await Task.Run(() =>
 {
-    var google = new TranslateGoogle();
+    ITranslate google = new TranslateGoogle();
     //fazer a tradução
     var tradusido = google.TranslateTextAsync(texto, idiomaOrigem, idiomaDestino);
 

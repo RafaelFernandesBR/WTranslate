@@ -1,11 +1,14 @@
+using WTranslate;
+
 namespace Translate.Google
 {
-    public class TranslateGoogle : GetTranslateGoogle
+    public class TranslateGoogle : GetTranslateGoogle, ITranslate
     {
 
-        public async Task<string?> TranslateTextAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
+        async Task<string?> ITranslate.TranslateTextAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
         {
             var tradusir = await GetTranslateAsync(texto, IdiomaOrigem, IdiomaDestino);
+
             if (tradusir != null)
             {
                 string textFin = null;
