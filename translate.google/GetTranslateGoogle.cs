@@ -6,14 +6,14 @@ namespace Translate.Google
 
         public GetTranslateGoogle()
         {
-            this.url = "https://clients5.google.com/";
+            this.url = "https://translate.google.com/m";
         }
 
-        protected async Task<string?> GetTranslateAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
+        public async Task<string> GetTranslateAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
         {
             var client = new HttpClient();
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"{url}translate_a/t?client=dict-chrome-ex&sl={IdiomaOrigem}&tl={IdiomaDestino}&q={texto}");
+            request.RequestUri = new Uri($"{url}?sl={IdiomaOrigem}&tl={IdiomaDestino}&hl={System.Globalization.CultureInfo.CurrentCulture.Name.Split('-')[1]}&q={texto}");
             request.Method = HttpMethod.Get;
 
             request.Headers.Add("Accept", "*/*");
@@ -22,15 +22,19 @@ namespace Translate.Google
             try
             {
                 var response = await client.SendAsync(request);
-                var result = await response.Content.ReadAsStringAsync();
-
-                return result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    throw new Exception($"Erro ao fazer a requisição: {response.StatusCode}");
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
-
     }
 }

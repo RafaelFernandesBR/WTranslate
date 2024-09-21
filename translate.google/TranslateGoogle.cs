@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using WTranslate;
 
 namespace Translate.Google
@@ -7,24 +8,22 @@ namespace Translate.Google
 
         async Task<string?> ITranslate.TranslateTextAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
         {
-            var tradusir = await GetTranslateAsync(texto, IdiomaOrigem, IdiomaDestino);
+            var html = await GetTranslateAsync(texto, IdiomaOrigem, IdiomaDestino);
 
-            if (tradusir != null)
+            if (html != null)
             {
-                string textFin = null;
-
-                if (IdiomaOrigem != "auto")
+                var regex = new Regex("<div class=\"result-container\">([^<]*)</div>");
+                var match = regex.Match(html);
+                if (match.Success)
                 {
-                    textFin = tradusir.Substring(2, tradusir.Length - 4);
+                    var textFin = match.Groups[1].Value;
+
+                    return textFin;
                 }
                 else
                 {
-                    textFin = tradusir.Substring(3, tradusir.Length - 11);
+                    throw new Exception("Não foi possível extrair o texto da tradução");
                 }
-                //remover os \\n do texto e adicionar nova linha no lugar
-                textFin = textFin.Replace("\\n", "\n");
-
-                return textFin;
             }
             else
             {
